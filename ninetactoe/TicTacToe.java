@@ -1,3 +1,4 @@
+/* z3459006 COMP3411 assignment 3. See agent.java for overview */
 package ninetactoe;
 
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class TicTacToe {
         return board[i-1] == EMPTY;
     }
 
+    /* Check if the heuristic is already in the cache; if it's not, compute it and return it */
     public double getHeuristic() {
         if(tttLookup.containsKey(this)) {
             return tttLookup.get(this);
@@ -72,6 +74,8 @@ public class TicTacToe {
         return heuristic;
     }
 
+    /* This heuristic is based on the percentage of all possible future states in favor for each player */
+    /* 0 > X > 1 is in favor of Player1, -1 < X < 0 is in favour of player2 */
     private double getHeuristic_uncached() {
         if(isDraw()) {
             return 0.0;
@@ -99,12 +103,9 @@ public class TicTacToe {
     }
     @Override
     public boolean equals(Object o) {
-        // If the object is compared with itself then return true
         if (o == this) {
             return true;
         }
-        /* Check if o is an instance of Complex or not
-          "null instanceof [type]" also returns false */
         if (!(o instanceof TicTacToe)) {
             return false;
         }
@@ -115,7 +116,6 @@ public class TicTacToe {
     public int hashCode() {
         return Arrays.hashCode(this.board);
     }
-
 
     public static void generate_states() {
         TicTacToe t = new TicTacToe();

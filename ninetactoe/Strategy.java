@@ -1,3 +1,4 @@
+/* z3459006 COMP3411 assignment 3. See agent.java for overview */
 package ninetactoe;
 
 public abstract class Strategy {

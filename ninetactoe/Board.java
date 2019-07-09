@@ -1,3 +1,6 @@
+/* z3459006 COMP3411 assignment 3. See agent.java for overview */
+/* Note that internally, all moves are shifted down. A game move of 1 on board 1 refers to the index position 0,0 */
+/* All internal datastructures use 0 indexed positions, all external functions, 1 indexed */
 package ninetactoe;
 
 import java.lang.reflect.Array;
@@ -19,7 +22,6 @@ public class Board {
     public int currentPlayer = 0;
 
     private ArrayList<Integer> moveHistory = new ArrayList<Integer>();
-
 
     public void place(int board, int num, int player) {
 
@@ -80,12 +82,6 @@ public class Board {
         return Board.PLAYER1;
     }
 
-    public int otherPlayer(int player) {
-        if(player == Board.PLAYER1)
-            return Board.PLAYER2;
-        return Board.PLAYER1;
-    }
-
     public int getPrevMove() {
         return prevMove+1;
     }
@@ -104,20 +100,7 @@ public class Board {
         return copied_board;
     }
 
-    public Iterable<Board> getChildren() {
-        List<Board> lb = new ArrayList<Board>();
-
-        for(int i=1;i<=9;++i) {
-            if(canMakeMove(i)) {
-                Board b = (Board) this.Copy();
-                b.makeMoveCopyState(i);
-                lb.add(b);
-            }
-        }
-        return lb;
-    }
-
-    @Override
+    @Override /* Returns a nicely formatted board to look at :) */
     public String toString() {
         StringBuilder s = new StringBuilder();
 
@@ -149,6 +132,7 @@ public class Board {
         return s.toString();
     }
 
+    /* Returns if a given TicTacToe board has been won */
     public int isSubBoardWon(int[] sb) {
         if(sb[0] != EMPTY && sb[0] == sb[1] && sb[1] == sb[2]) return sb[0];
         if(sb[3] != EMPTY && sb[3] == sb[4] && sb[4] == sb[5]) return sb[3];
@@ -165,7 +149,6 @@ public class Board {
         return boards[subboard-1];
     }
 
-
     private Boolean isDrawSubboard(int sb[]) {
         for(int i=0;i<9;++i) {
             if(sb[i] == EMPTY) return false;
@@ -174,8 +157,6 @@ public class Board {
     }
 
     public Boolean isDraw() {
-
-
         if (moveHistory.size() >= 2)
         {
             int last_board = moveHistory.get(moveHistory.size() - 2);
@@ -189,7 +170,7 @@ public class Board {
     }
 
     public int getGameState() {
-        /* For each board */
+        /* We only need to check if the state has changed due to the last move */
 
         if(moveHistory.size() >= 2) {
             int last_board = moveHistory.get(moveHistory.size()-2);
@@ -226,6 +207,7 @@ public class Board {
     }
 
 
+    /* These are for debugging/dumping output for statistical analysis.
     public ArrayList<Double> stateToArray() {
         ArrayList<Double> al = new ArrayList<Double>();
         if(currentPlayer == PLAYER1)
@@ -301,9 +283,5 @@ public class Board {
         }
         assert(1==1);
         return;
-
-
-
-
-    }
+    } */
 }

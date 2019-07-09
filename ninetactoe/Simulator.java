@@ -107,7 +107,7 @@ public class Simulator {
         } else if ( result == Board.PLAYER1) { System.out.println("X Wins"); }
         else if ( result == Board.PLAYER2) { System.out.println("O Wins"); }
 
-        //s.mass_simulate(500000);
+        s.mass_simulate(500000);
     }
 
 }
